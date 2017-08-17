@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU Lesser General Public
 # License along with this library; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+# Foundation, Inc., 151 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 
 import copy
 import libvirt
@@ -1755,7 +1755,7 @@ class VMModel(object):
 
         def _get_local_ppc64_subpercore():
             local_cmd = ['ppc64_cpu', '--subcores-per-core']
-            out, err, returncode = run_command(local_cmd, 5, silent=True)
+            out, err, returncode = run_command(local_cmd, 15, silent=True)
             if returncode != 0:
                 return None
             local_sub_per_core = out.strip()[-1]
@@ -1766,7 +1766,7 @@ class VMModel(object):
             ssh_cmd = ['ssh', '-oNumberOfPasswordPrompts=0',
                        '-oStrictHostKeyChecking=no', username_host,
                        'ppc64_cpu', '--subcores-per-core']
-            out, err, returncode = run_command(ssh_cmd, 5, silent=True)
+            out, err, returncode = run_command(ssh_cmd, 15, silent=True)
             if returncode != 0:
                 return None
             remote_sub_per_core = out.strip()[-1]
@@ -1787,7 +1787,7 @@ class VMModel(object):
         ssh_cmd = ['ssh', '-oNumberOfPasswordPrompts=0',
                    '-oStrictHostKeyChecking=no', username_host,
                    'echo', 'hello']
-        stdout, stderr, returncode = run_command(ssh_cmd, 5, silent=True)
+        stdout, stderr, returncode = run_command(ssh_cmd, 15, silent=True)
         if returncode != 0:
             if password is None:
                 raise OperationFailed("KCHVM0056E",
@@ -1925,7 +1925,7 @@ class VMModel(object):
         username_host = "%s@%s" % (user, remote_host)
         cmd = ['ssh', '-oStrictHostKeyChecking=no', username_host,
                'test', '-e', path]
-        _, _, returncode = run_command(cmd, 5, silent=True)
+        _, _, returncode = run_command(cmd, 15, silent=True)
         return returncode == 0
 
     def _get_vm_devices_infos(self, vm_name):
@@ -1946,7 +1946,7 @@ class VMModel(object):
         username_host = "%s@%s" % (user, remote_host)
         cmd = ['ssh', '-oStrictHostKeyChecking=no', username_host,
                'touch', path]
-        _, _, returncode = run_command(cmd, 5, silent=True)
+        _, _, returncode = run_command(cmd, 15, silent=True)
         if returncode != 0:
             raise OperationFailed(
                 "KCHVM0061E",
